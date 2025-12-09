@@ -45,12 +45,16 @@ def main(input_word):
         if 'error' in locals():
             print(RED + error + RESET)
             del error
-            
+
         print()
 
 
         guess = input("Guess a letter: ").strip().lower()
         if guess.isalpha() and len(guess) == 1:
+            if guess in incorrect or guess.upper() in reaveled:
+                error = ("You have already guessed that letter. Try again.")
+                continue
+            
             correct = False
 
             for i, letter in enumerate(word.lower()):
