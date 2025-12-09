@@ -1,5 +1,9 @@
 import requests
+import os
+import Hangman
 
+RED = '\033[31m'
+RESET = '\033[0m'
 whitesspace = "\n" * 50
 
 def get_random_word():
@@ -28,6 +32,22 @@ def main(input_word):
     incorrect = []
 
     while len(incorrect) < 11 and '_' in reaveled:
+        os.system('cls')
+        print(Hangman.ascii[len(incorrect)])
+
+        print("Current word: " + ' '.join(reaveled))
+        for i in incorrect:
+            print(f"Incorrect guesses: {', '.join(incorrect).upper()}")
+            break
+
+        print(f"Attempts remaining: {11 - len(incorrect)}")
+
+        if 'error' in locals():
+            print(RED + error + RESET)
+            del error
+            
+        print()
+
 
         guess = input("Guess a letter: ").strip().lower()
         if guess.isalpha() and len(guess) == 1:
@@ -40,25 +60,30 @@ def main(input_word):
 
             if correct == False:
                 incorrect.append(guess)
-                print(f"Incorrect guesses: {(incorrect)}")
-                print(f"Attempts remaining: {11 - len(incorrect)}")
                         
             correct == False
             print("Current word: " + ' '.join(reaveled))
         else:
-            print("Invalid guess. Please enter a single letter.")
+            error = ("Invalid guess. Please enter a single letter.")
     
     if len(incorrect) == 11:
+        print(Hangman.ascii[13])
         print(f"You lost! The word was: {word}")
+        input("Press Enter to continue...")
+
     elif '_' not in reaveled:
+        print(Hangman.ascii[12])
         print(f"Congratulations! You guessed the word: {word}")
+        input("Press Enter to continue...")
     else:
-        print("Error occurred.")
+        error = ("Error occurred.")
 
         
         
 
 while True:
+    print(whitesspace)
+    print(Hangman.ascii[11])
     game_mode = input("Choose game mode - '1' for random word, '2' for user-defined word: ").strip()
     if game_mode == '1':
         secret_word = get_random_word()
