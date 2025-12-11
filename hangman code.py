@@ -49,8 +49,19 @@ def main(input_word):
         print()
 
 
-        guess = input("Guess a letter: ").strip().lower()
-        if guess.isalpha() and len(guess) == 1:
+        guess = input("Guess a letter/word: ").strip().lower()
+
+        if guess.isalpha() and len(guess) == len(word):
+            if guess.lower() == word.lower():
+                reaveled = list(word)
+                print(Hangman.ascii[12])
+                print(f"Congratulations! You guessed the word: {word}")
+                input("Press Enter to continue...")
+            elif guess != word:
+                incorrect.append(guess)
+                print(f"{RED}Incorrect guess.{RESET}")
+
+        elif guess.isalpha() and len(guess) == 1:
             if guess in incorrect or guess.upper() in reaveled:
                 error = ("You have already guessed that letter. Try again.")
                 continue
